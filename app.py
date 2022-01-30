@@ -121,3 +121,27 @@ def find_post(id):
     return f"<p>{post}</p>"
 
 # Can have more variable:
+
+
+@app.route("/products/<category>/<int:product_id>")
+def product_detail(category, product_id):
+    """Show detail page for product."""
+    return f"<h1>Viewing the product with id: {product_id} from the category: {category}</h1>"
+
+
+# Query Params vs URL Params
+# http://toys.com/shop/spinning-top?color=red
+# URL Parameter                                   Query Parameter
+# /shop/<toy>                                     /shop?toy=elmo
+# Feels more like “subject of page”               Feels more like “extra info about page”
+#                                                 Often used when coming from form
+
+
+@app.route("/shop/<toy>")
+def toy_detail(toy):
+    """Show detail about a toy."""
+
+    # Get color from req.args, falling back to None
+    color = request.args.get("color")
+
+    return f"<h1>{toy}</h1>Color: {color}"
