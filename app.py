@@ -1,5 +1,5 @@
 # request, represents web requests, helps access to the query string inside of "request.args[...]"
-from flask import Flask, request
+from flask import Flask, request, render_template
 # instantiate a new application object and takes in the dunder name (__name__)
 app = Flask(__name__)
 
@@ -22,14 +22,7 @@ def index():
 
 @app.route('/hello')
 def say_hello():
-    return """
-      <html>
-        <body>
-          <h1>I am a hello page</h1>
-          <a href='/'>Go to home page</a>
-        </body>
-      </html>
-    """
+    return render_template("hello.html")
 
 # Handling Query Arguments
 # request.args is a dict-like object of query parameters.
