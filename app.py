@@ -1,8 +1,15 @@
 # request, represents web requests, helps access to the query string inside of "request.args[...]"
 from flask import Flask, request, render_template
+# Get the debugging tool on the right side of the page, but this is only going to work on pages, where we have a template involved
+# for example, if it's not responding with an HTML file or template, it's a string of HTML
+from flask_debugtoolbar import DebugToolbarExtension
+from random import randint
 # instantiate a new application object and takes in the dunder name (__name__)
 app = Flask(__name__)
+# Later, when we talk about security & deployment, we’ll talk about when and how to actually keep this secret.
+app.config['SECRET_KEY'] = "dumbonudumb"
 
+debug = DebugToolbarExtension(app)
 # a decorator expecting a funciton to come right after this line
 # listen for a request to '/', when that happens then call the following funciton
 
@@ -18,6 +25,15 @@ def index():
         </body>
       </html>
       """
+
+
+# Jinja will replace things like {{msg}} with value of msg passed when rendering:
+
+
+@app.route('/lucky')
+def lucky_number():
+    num = randint(1, 10)
+    return render_template("lucky.html", lucky_num=num)
 
 
 @app.route('/hello')
@@ -138,3 +154,5 @@ def toy_detail(toy):
     color = request.args.get("color")
 
     return f"<h1>{toy}</h1>Color: {color}"
+
+# finished Introduction to templates
