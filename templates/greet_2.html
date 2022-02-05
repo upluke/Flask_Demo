@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeter V</title>
+</head>
+<body>
+    <h1>Hi there, {{username}}!</h1>
+    {% if wants_compliments %}
+    <h2>OK HERE ARE COMPLIMENTS!</h2>
+    <ul>
+    {% for compliment in compliments %}
+    <li>{{compliment}}</li>
+    {%  endfor %}
+    </ul>
+    {%  endif %}
+   
+</body>
+</html>

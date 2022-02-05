@@ -3,7 +3,7 @@ from flask import Flask, request, render_template
 # Get the debugging tool on the right side of the page, but this is only going to work on pages, where we have a template involved
 # for example, if it's not responding with an HTML file or template, it's a string of HTML
 from flask_debugtoolbar import DebugToolbarExtension
-from random import choice, randint
+from random import choice, randint, sample
 # instantiate a new application object and takes in the dunder name (__name__)
 app = Flask(__name__)
 # Later, when we talk about security & deployment, we’ll talk about when and how to actually keep this secret.
@@ -27,12 +27,19 @@ def index():
       """
 
 
+# ---------------------------------------- varibales, conditionals, loops
 @app.route('/form')
 def show_form():
+    """Shows greeter V1 Form"""
     return render_template("form.html")
 
 
-# ----------------------------------------
+@app.route('/form-2')
+def show_form_2():
+    """Shows greeter V2 Form"""
+    return render_template("form_2.html")
+
+
 COMPLIMENTS = ["cool", "clever", "tenacious", "awesome", "Pythonic"]
 
 
@@ -46,7 +53,18 @@ def get_greeting():
     # an then we'll pass the two variables to our template called "greet.html"
     return render_template("greet.html", username=username, compliment=nice_thing)
 
-# ----------------------------------------
+
+@app.route('/greet-2')
+def get_greeting_2():
+    """Greets and optionally compliments(3 random compliments) a user"""
+    username = request.args["username"]
+    # use get to prevent it from throwing an error if the box is not checked/ the boolean value wasn't passed as aprt of the query string
+    wants = request.args.get("wants_compliments")
+    # sample COMPLIMENTS adn we want 3 random compliments, and taht should give us a new list containing the compliments
+    nice_things = sample(COMPLIMENTS, 3)
+    return render_template("greet_2.html", username=username, wants_compliments=wants, compliments=nice_things)
+
+# ---------------------------------------- variables, conditionals
 # Jinja will replace things like {{msg}} with value of msg passed when rendering:
 # here lucky_num will be passed to the lucky.html
 # Conditionals in Jinja
@@ -57,8 +75,7 @@ def lucky_number():
     num = randint(1, 10)
     return render_template("lucky.html", lucky_num=num, msg="You are so lucky!!")
 
-# ----------------------------------------
-# Loops in Jinja
+# ---------------------------------------- Loops in Jinja
 
 
 @app.route('/spell/<word>')
@@ -74,8 +91,7 @@ def say_hello():
     return render_template("hello.html")
 
 
-# ----------------------------------------
-# Handling Query Arguments
+# ---------------------------------------- Handling Query Arguments
 # request.args is a dict-like object of query parameters.
 
 
@@ -86,13 +102,12 @@ def search():
     term = request.args["term"]
     sort = request.args["sort"]
     return f"<h1>Searching for {term} </h1> <p>Sorting by: {sort} </p> "
-# ----------------------------------------
-
-# Handling POST Requests
 
 
+# ---------------------------------------- Handling POST Requests
 # This route is responding to GET requests
 # To accept POST requests, must specify that: methods=["POST"]
+
 
 @app.route("/add-comment")
 def add_comment_form():
@@ -128,8 +143,7 @@ def add_comment():
     """
 
 
-# ----------------------------------------
-# Variables in a URL
+# ----------------------------------------Variables in a URL
 # Argument capture in Flask:
 USERS = {
     "whiskey": "Whiskey The Dog",
@@ -149,7 +163,7 @@ def show_user_profile(username):  # matching parameter:username
     name = USERS[username]
     return f"<h1>Profile for {name}</h1>"
 
-# ----------------------------------------
+# ----------------------------------------Query Params vs URL Params
 # Converts to integer when calling function:
 
 
