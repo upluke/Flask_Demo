@@ -32,6 +32,7 @@ def show_form():
     return render_template("form.html")
 
 
+# ----------------------------------------
 COMPLIMENTS = ["cool", "clever", "tenacious", "awesome", "Pythonic"]
 
 
@@ -45,9 +46,10 @@ def get_greeting():
     # an then we'll pass the two variables to our template called "greet.html"
     return render_template("greet.html", username=username, compliment=nice_thing)
 
-
+# ----------------------------------------
 # Jinja will replace things like {{msg}} with value of msg passed when rendering:
 # here lucky_num will be passed to the lucky.html
+# Conditionals in Jinja
 
 
 @app.route('/lucky')
@@ -55,11 +57,24 @@ def lucky_number():
     num = randint(1, 10)
     return render_template("lucky.html", lucky_num=num, msg="You are so lucky!!")
 
+# ----------------------------------------
+# Loops in Jinja
 
+
+@app.route('/spell/<word>')
+def spell_word(word):
+    """Spells a word out letter by letter"""
+    caps_word = word.upper()
+    return render_template('spell_word.html', word=caps_word)
+
+
+# ----------------------------------------
 @app.route('/hello')
 def say_hello():
     return render_template("hello.html")
 
+
+# ----------------------------------------
 # Handling Query Arguments
 # request.args is a dict-like object of query parameters.
 
@@ -71,7 +86,7 @@ def search():
     term = request.args["term"]
     sort = request.args["sort"]
     return f"<h1>Searching for {term} </h1> <p>Sorting by: {sort} </p> "
-
+# ----------------------------------------
 
 # Handling POST Requests
 
@@ -113,6 +128,7 @@ def add_comment():
     """
 
 
+# ----------------------------------------
 # Variables in a URL
 # Argument capture in Flask:
 USERS = {
@@ -133,8 +149,9 @@ def show_user_profile(username):  # matching parameter:username
     name = USERS[username]
     return f"<h1>Profile for {name}</h1>"
 
-
+# ----------------------------------------
 # Converts to integer when calling function:
+
 
 POSTS = {
     1: "I like mayo!",
