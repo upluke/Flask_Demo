@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeter form</title>
+</head>
+<body>
+    <h1>Greeter form</h1>
+    <!--1. The form sumbit our data, just one field, to /greet as a get request, so username will be stored as part 
+    of the query string -->
+    <!-- 2. then route/greet(in app.py) is going to have access to username through request.args, which is compiled or constructed 
+    based off of the incoming query string. So we grab that username and pass it into the template,3. we also pick a random compliment from a list,
+     we pass that in, we render greet.html with those two variables.  -->
+    <!-- 3. In greet.html, we have access to those two variables, and we just add them into our markup. -->
+    
+    <!-- Route /greet is where we want this action to be. Should send a request to /greet -->
+  
+
+    <form action="/greet">
+        <!-- name is what will be sent of the request to wherever this form submits -->
+        <!-- when you hit submit button -->
+        <!-- http://127.0.0.1:5500/templates/form.html?username=bonu -->
+        <input type="text" placeholder="your name" name="username" /> 
+        <button>Submit</button>
+    </form>
+</body>
+</html>

@@ -3,7 +3,7 @@ from flask import Flask, request, render_template
 # Get the debugging tool on the right side of the page, but this is only going to work on pages, where we have a template involved
 # for example, if it's not responding with an HTML file or template, it's a string of HTML
 from flask_debugtoolbar import DebugToolbarExtension
-from random import randint
+from random import choice, randint
 # instantiate a new application object and takes in the dunder name (__name__)
 app = Flask(__name__)
 # Later, when we talk about security & deployment, we’ll talk about when and how to actually keep this secret.
@@ -27,7 +27,27 @@ def index():
       """
 
 
+@app.route('/form')
+def show_form():
+    return render_template("form.html")
+
+
+COMPLIMENTS = ["cool", "clever", "tenacious", "awesome", "Pythonic"]
+
+
+@app.route('/greet')
+def get_greeting():
+    # get something from the query string is through this request object, object.args, which is a data structure that is similar
+    # to a dictionary where we can use a key to get a value out. And the key is goning to be "username" in this case
+    username = request.args["username"]
+    # pick a random compliment
+    nice_thing = choice(COMPLIMENTS)
+    # an then we'll pass the two variables to our template called "greet.html"
+    return render_template("greet.html", username=username, compliment=nice_thing)
+
+
 # Jinja will replace things like {{msg}} with value of msg passed when rendering:
+# here lucky_num will be passed to the lucky.html
 
 
 @app.route('/lucky')
@@ -155,4 +175,4 @@ def toy_detail(toy):
 
     return f"<h1>{toy}</h1>Color: {color}"
 
-# finished Introduction to templates
+# finished jinija variables
