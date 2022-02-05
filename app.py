@@ -53,7 +53,7 @@ def get_greeting():
 @app.route('/lucky')
 def lucky_number():
     num = randint(1, 10)
-    return render_template("lucky.html", lucky_num=num)
+    return render_template("lucky.html", lucky_num=num, msg="You are so lucky!!")
 
 
 @app.route('/hello')
@@ -175,4 +175,4 @@ def toy_detail(toy):
 
     return f"<h1>{toy}</h1>Color: {color}"
 
-# finished jinija variables
+# finished jinija condtion
