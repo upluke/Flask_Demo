@@ -27,7 +27,7 @@ def index():
       """
 
 
-# ---------------------------------------- varibales, conditionals, loops
+# ---------------------------------------- varibales, conditionals, loops, template inheritance
 @app.route('/form')
 def show_form():
     """Shows greeter V1 Form"""
