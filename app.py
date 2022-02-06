@@ -18,13 +18,15 @@ debug = DebugToolbarExtension(app)
 def index():
     """Show homepage"""
     # this returned string will be used to construct a full HTTP response
-    return """
-      <html>
-        <body>
-          <h1>I am the landing page</h1>
-        </body>
-      </html>
-      """
+
+    # return """
+    #   <html>
+    #     <body>
+    #       <h1>I am the landing page</h1>
+    #     </body>
+    #   </html>
+    #   """
+    return render_template('home.html')
 
 
 # ---------------------------------------- varibales, conditionals, loops, template inheritance
@@ -83,12 +85,6 @@ def spell_word(word):
     """Spells a word out letter by letter"""
     caps_word = word.upper()
     return render_template('spell_word.html', word=caps_word)
-
-
-# ----------------------------------------
-@app.route('/hello')
-def say_hello():
-    return render_template("hello.html")
 
 
 # ---------------------------------------- Handling Query Arguments

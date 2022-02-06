@@ -9,15 +9,17 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <nav>
-        <a>Pretend that I'm a nav bar</a>
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a href="/form">Greet V1</a>
+        <a href="/form-2">Greet V2</a>
+        <a href="/lucky">Lucky</a>
+        
     </nav>
     <main id="content">
         {% block content %} {% endblock %}
-      </main>
-    <footer>
-        Pretend I am a footer
-    </footer>
+    </main>
+   
     <script src="/static/app.js"></script>
 </body>
 </html>
