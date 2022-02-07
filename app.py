@@ -1,21 +1,29 @@
+# First we import the Flask class. An instance of this class will be our WSGI application.
 # request, represents web requests, helps access to the query string inside of "request.args[...]"
 from flask import Flask, request, render_template
 # Get the debugging tool on the right side of the page, but this is only going to work on pages, where we have a template involved
 # for example, if it's not responding with an HTML file or template, it's a string of HTML
 from flask_debugtoolbar import DebugToolbarExtension
 from random import choice, randint, sample
+# Next we create an instance of this class. The first argument is the name of the application’s module or package. __name__ is a convenient shortcut for this that is appropriate for most cases.
+# This is needed so that Flask knows where to look for resources such as templates and static files.
 # instantiate a new application object and takes in the dunder name (__name__)
 app = Flask(__name__)
 # Later, when we talk about security & deployment, we’ll talk about when and how to actually keep this secret.
 app.config['SECRET_KEY'] = "dumbonudumb"
 
 debug = DebugToolbarExtension(app)
+
+# We then use the route() decorator to tell Flask what URL should trigger our function.
+# In this case we use / routh, which is the default route of any website.
 # a decorator expecting a funciton to come right after this line
 # listen for a request to '/', when that happens then call the following funciton
 
 
 @app.route('/')
 def index():
+    # The function returns the message we want to display in the user’s browser.
+    # The default content type is HTML, so HTML in the string will be rendered by the browser.
     """Show homepage"""
     # this returned string will be used to construct a full HTTP response
 
