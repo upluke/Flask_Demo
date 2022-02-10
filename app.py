@@ -1,6 +1,6 @@
 # First we import the Flask class. An instance of this class will be our WSGI application.
 # request, represents web requests, helps access to the query string inside of "request.args[...]"
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 # Get the debugging tool on the right side of the page, but this is only going to work on pages, where we have a template involved
 # for example, if it's not responding with an HTML file or template, it's a string of HTML
 from flask_debugtoolbar import DebugToolbarExtension
@@ -11,7 +11,8 @@ from random import choice, randint, sample
 app = Flask(__name__)
 # Later, when we talk about security & deployment, we’ll talk about when and how to actually keep this secret.
 app.config['SECRET_KEY'] = "dumbonudumb"
-
+# Turn off debug toolbar intercept redirect
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
 # We then use the route() decorator to tell Flask what URL should trigger our function.
@@ -36,8 +37,24 @@ def index():
     #   """
     return render_template('home.html')
 
+# ---------------------------------------- redirect
+# The status code is a “redirect code” (often, 302)
+# we'll pretend that this old_home_page we actually had set up a couple of years ago,
+# people might have bookmarked it, they might have it saved, it might be in Google search results,
+# so we don't want to just elimiante it, and give a user an error if they try and request it.
+# We'll just redirect them.
+# Note: If you don’t want flask debug toolbar to intercept redirect, you can turn it off by:
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
-# ---------------------------------------- varibales, conditionals, loops, template inheritance
+
+@app.route('/old-home-page')
+def redirect_to_home():
+    """ Redirects to new home page"""
+    return redirect('/')
+
+    # ---------------------------------------- varibales, conditionals, loops, template inheritance
+
+
 @app.route('/form')
 def show_form():
     """Shows greeter V1 Form"""
@@ -210,4 +227,4 @@ def toy_detail(toy):
 
     return f"<h1>{toy}</h1>Color: {color}"
 
-# finished jinija condtion
+# finished falsk-redirects
