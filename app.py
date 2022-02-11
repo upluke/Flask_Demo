@@ -53,6 +53,16 @@ def redirect_to_home():
     """ Redirects to new home page"""
     return redirect('/')
 
+# Most commonly will be redirecting when we have a POST request. And the reason for this is that POST requests usually
+# include data from a user. Typically it's comming from a form. And that data is part of the request. It is sent
+# with that request. And what that means is that, if a user were to refresh the page, when we serve HTML from a
+# POST reqeust, they could resend that POST reqeust again and they get this weird "Are you sure you want to resubmit the form data?"
+# It's a warning from the browser. And they would be sending that data again, even though they didn't type anything into
+# a form, if they refresh, they're sending another POST reqeust. So instead of doing that, the typical workflow is to have
+# a POST route where form data is sent to and process it inside of that route. And then when we're done, redirect a user
+# to a different page, that is a GET request, and then we'll show some sort of confirmation or show proof that their form data
+# was used in some way.
+
 
 # fake DB
 MOVIES = ['Amadeus', 'Chicken Run', 'Dances With Wolves']
@@ -255,15 +265,4 @@ def toy_detail(toy):
 
     return f"<h1>{toy}</h1>Color: {color}"
 
-# finished falsk-redirects
-
-
-# Most commonly will be redirecting when we have a POST request. And the reason for this is that POST requests usually
-# include data from a user. Typically it's comming from a form. And that data is part of the request. It is sent
-# with that request. And what that means is that, if a user were to refresh the page, when we serve HTML from a
-# POST reqeust, they could resend that POST reqeust again and they get this weird "Are you sure you want to resubmit the form data?"
-# It's a warning from the browser. And they would be sending that data again, even though they didn't type anything into
-# a form, if they refresh, they're sending another POST reqeust. So instead of doing that, the typical workflow is to have
-# a POST route where form data is sent to and process it inside of that route. And then when we're done, redirect a user
-# to a different page, that is a GET request, and then we'll show some sort of confirmation or show proof that their form data
-# was used in some way.
+# finished movies-postdemo
