@@ -65,7 +65,8 @@ def redirect_to_home():
 
 
 # fake DB
-MOVIES = ['Amadeus', 'Chicken Run', 'Dances With Wolves']
+# we only want to allow a user to add a movie that is unique, sets automatically enforce that.
+MOVIES = {'Amadeus', 'Chicken Run', 'Dances With Wolves'}
 
 # sent a GET reqeust to /movies, and this responds with the list of movies,as well as the form (movies.html)
 
@@ -83,17 +84,23 @@ def show_all_movies():
 @app.route('/movies/new', methods=["POST"])
 def add_movie():
     title = request.form['title']
-    # Add to pretend DB
-    MOVIES.append(title)
     # Message Flashing
     # provide feedback to a user at whatever the next page is that they encounter,
     # so not permanent messages that we want to actually embed in the HTML,
     # but something that will only last for one-page load.
     # Flask will remove that msg after the user has seen it.
-
-    flash("Created Your Movie!")
+    if title in MOVIES:
+        flash('Movie Already Exists!', 'error')
+    else:
+        # Add to pretend DB
+        MOVIES.add(title)
+        # pass a category through, all we do is add in a second argument
+        # * inorder to access those categories, we need to add (with_categories=true)
+        # as a parameter to get_flash_messages ("base.html")
+        # we will use that category to style our actual content
+        flash("Created Your Movie!", 'success')
     # We could have multiple flashes
-    flash("Good choice!!")
+        flash("Good choice!!")
     # If we want to use the same template (bellow), render the same list of template the form post reqeust will be
     # resent when we refresh, becuase it's a post route it responded with a template
 #    return render_template('movies.html', movies=MOVIES)
@@ -274,4 +281,4 @@ def toy_detail(toy):
 
     return f"<h1>{toy}</h1>Color: {color}"
 
-# finished movies-postdemo
+# finished f message categoreis

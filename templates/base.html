@@ -14,12 +14,25 @@
         <a href="/form">Greet V1</a>
         <a href="/form-2">Greet V2</a>
         <a href="/lucky">Lucky</a>
-        
     </nav>
+
     <main id="content">
+        <!-- 'with' allows us to make a variable -->
+        {% with messages=get_flashed_messages(with_categories=true) %}
+        <!-- check to see if there's anything in get_flashed_messages, and make sure our flash 
+        message content won't show up needlessly, it's only on the page if we actually have messages to show   -->
+        {% if messages %}
+        <section class="messages">
+            <!-- Message Flashing -->
+            {% for category, msg in messages %}
+            <p class="{{category}}">{{ msg }}</p>
+            {% endfor %}
+        </section>
+        {% endif %}
+        {% endwith %}
         {% block content %} {% endblock %}
     </main>
-   
+    
     <script src="/static/app.js"></script>
 </body>
 </html>

@@ -1,8 +1,9 @@
+{% extends 'base.html' %}
+{% block title %} Movies List{% endblock %}
+
+{% block content %}
 <h1>ALL Movies</h1>
-<!-- Message Flashing -->
-{% for msg in get_flashed_messages() %}
-  <p>{{ msg }}</p>
-{% endfor %}
+
 <ul>
     {% for movie in movies %}
     <li>{{movie}}</li>
@@ -15,3 +16,4 @@
     <input type="text" placeholder="movie title" name='title'>
     <button>Submit</button>
 </form>
+{% endblock %}
