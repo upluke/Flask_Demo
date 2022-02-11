@@ -1,7 +1,7 @@
 # First we import the Flask class. An instance of this class will be our WSGI application.
 # request, represents web requests, helps access to the query string inside of "request.args[...]"
 from crypt import methods
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, flash
 # Get the debugging tool on the right side of the page, but this is only going to work on pages, where we have a template involved
 # for example, if it's not responding with an HTML file or template, it's a string of HTML
 from flask_debugtoolbar import DebugToolbarExtension
@@ -38,7 +38,7 @@ def index():
     #   """
     return render_template('home.html')
 
-# ---------------------------------------- redirect, POST reqeust
+# ---------------------------------------- redirect, POST reqeust, flash
 # The status code is a “redirect code” (often, 302)
 # we'll pretend that this old_home_page we actually had set up a couple of years ago,
 # people might have bookmarked it, they might have it saved, it might be in Google search results,
@@ -85,6 +85,15 @@ def add_movie():
     title = request.form['title']
     # Add to pretend DB
     MOVIES.append(title)
+    # Message Flashing
+    # provide feedback to a user at whatever the next page is that they encounter,
+    # so not permanent messages that we want to actually embed in the HTML,
+    # but something that will only last for one-page load.
+    # Flask will remove that msg after the user has seen it.
+
+    flash("Created Your Movie!")
+    # We could have multiple flashes
+    flash("Good choice!!")
     # If we want to use the same template (bellow), render the same list of template the form post reqeust will be
     # resent when we refresh, becuase it's a post route it responded with a template
 #    return render_template('movies.html', movies=MOVIES)

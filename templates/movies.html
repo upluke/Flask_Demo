@@ -1,4 +1,8 @@
 <h1>ALL Movies</h1>
+<!-- Message Flashing -->
+{% for msg in get_flashed_messages() %}
+  <p>{{ msg }}</p>
+{% endfor %}
 <ul>
     {% for movie in movies %}
     <li>{{movie}}</li>
