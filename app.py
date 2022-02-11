@@ -282,3 +282,25 @@ def toy_detail(toy):
     return f"<h1>{toy}</h1>Color: {color}"
 
 # finished f message categoreis
+
+
+# -------------- python debugger (but flask_debugtoolbar is better)
+# Python includes a built-in debugger, pdb. To add a breakpoint to your code:
+
+# import pdb
+# pdb.set_trace()
+
+# When you hit that set_trace(), Python will stop so you can debug this.
+
+# Debugger Basics:
+# Key	Command
+# ?	    Get help
+# l	    List code where I am
+# p	    Print this expression
+# pp	Pretty print this expression
+# n	    Go to next line (step over)
+# s	    Step into function call
+# r	    Return from function call
+# c	    Continue to next breakpoint
+# w	    Print “frame” (where am I?)
+# q	    Quit debugger
