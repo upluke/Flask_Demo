@@ -1,7 +1,7 @@
 # First we import the Flask class. An instance of this class will be our WSGI application.
 # request, represents web requests, helps access to the query string inside of "request.args[...]"
 from crypt import methods
-from flask import Flask, request, render_template, redirect, flash
+from flask import Flask, request, render_template, redirect, flash, jsonify
 # Get the debugging tool on the right side of the page, but this is only going to work on pages, where we have a template involved
 # for example, if it's not responding with an HTML file or template, it's a string of HTML
 from flask_debugtoolbar import DebugToolbarExtension
@@ -106,6 +106,14 @@ def add_movie():
 #    return render_template('movies.html', movies=MOVIES)
 # So instead of doing the above code, what we do normally do is redirect to some other GET route.
     return redirect('/movies')
+
+# Not only does jsonify convert something into JSON format from Python/ we can respond with valid JSON objects ,
+# it also is going to tell us in the response headers that content type is appplicaiton/json (inspect->Network->Headers)
+
+
+@app.route('/movies/json')
+def get_movies_json():
+    return jsonify(list(MOVIES))
 # ---------------------------------------- varibales, conditionals, loops, template inheritance
 
 
