@@ -1,0 +1,13 @@
+<h1>ALL Movies</h1>
+<ul>
+    {% for movie in movies %}
+    <li>{{movie}}</li>
+    {% endfor %}
+</ul>
+
+<!-- # add a for a user to add a new movie  -->
+<!-- This is going to send a POST reqeust to movie/new -->
+<form action="/movies/new" method="POST">
+    <input type="text" placeholder="movie title" name='title'>
+    <button>Submit</button>
+</form>

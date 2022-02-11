@@ -1,5 +1,6 @@
 # First we import the Flask class. An instance of this class will be our WSGI application.
 # request, represents web requests, helps access to the query string inside of "request.args[...]"
+from crypt import methods
 from flask import Flask, request, render_template, redirect
 # Get the debugging tool on the right side of the page, but this is only going to work on pages, where we have a template involved
 # for example, if it's not responding with an HTML file or template, it's a string of HTML
@@ -37,7 +38,7 @@ def index():
     #   """
     return render_template('home.html')
 
-# ---------------------------------------- redirect
+# ---------------------------------------- redirect, POST reqeust
 # The status code is a “redirect code” (often, 302)
 # we'll pretend that this old_home_page we actually had set up a couple of years ago,
 # people might have bookmarked it, they might have it saved, it might be in Google search results,
@@ -52,7 +53,34 @@ def redirect_to_home():
     """ Redirects to new home page"""
     return redirect('/')
 
-    # ---------------------------------------- varibales, conditionals, loops, template inheritance
+
+# fake DB
+MOVIES = ['Amadeus', 'Chicken Run', 'Dances With Wolves']
+
+# sent a GET reqeust to /movies, and this responds with the list of movies,as well as the form (movies.html)
+
+
+@app.route('/movies')
+def show_all_movies():
+    """Show list of all movies in fake DB"""
+    return render_template('movies.html', movies=MOVIES)
+# Add in methods equals POST in order to listen for a POST request coming in
+
+# The data from the form input (in movies.html), the movie title is extracted from the form data
+# and it's added into the fake database. Then, we redireted back to the same route ('/movies')
+
+
+@app.route('/movies/new', methods=["POST"])
+def add_movie():
+    title = request.form['title']
+    # Add to pretend DB
+    MOVIES.append(title)
+    # If we want to use the same template (bellow), render the same list of template the form post reqeust will be
+    # resent when we refresh, becuase it's a post route it responded with a template
+#    return render_template('movies.html', movies=MOVIES)
+# So instead of doing the above code, what we do normally do is redirect to some other GET route.
+    return redirect('/movies')
+# ---------------------------------------- varibales, conditionals, loops, template inheritance
 
 
 @app.route('/form')
@@ -228,3 +256,14 @@ def toy_detail(toy):
     return f"<h1>{toy}</h1>Color: {color}"
 
 # finished falsk-redirects
+
+
+# Most commonly will be redirecting when we have a POST request. And the reason for this is that POST requests usually
+# include data from a user. Typically it's comming from a form. And that data is part of the request. It is sent
+# with that request. And what that means is that, if a user were to refresh the page, when we serve HTML from a
+# POST reqeust, they could resend that POST reqeust again and they get this weird "Are you sure you want to resubmit the form data?"
+# It's a warning from the browser. And they would be sending that data again, even though they didn't type anything into
+# a form, if they refresh, they're sending another POST reqeust. So instead of doing that, the typical workflow is to have
+# a POST route where form data is sent to and process it inside of that route. And then when we're done, redirect a user
+# to a different page, that is a GET request, and then we'll show some sort of confirmation or show proof that their form data
+# was used in some way.
