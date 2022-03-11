@@ -192,12 +192,13 @@ def search():
 # To accept POST requests, must specify that: methods=["POST"]
 
 
-@app.route("/add-comment")
+@app.route("/add-comment") # GET method by default 
 def add_comment_form():
     """Show form for adding a comment."""
     # the name attribute will be used to store the value from this input when it's sent to the server
+
     return """
-      <form method="POST">
+      <form method="POST"> 
         <input text="text" placeholder="comment" name="comment">
          <input text="text" placeholder="username" name="username">
         <button>Submit</button>
@@ -238,6 +239,14 @@ def add_comment_form():
 #                                  amount: 70.00
 #                                  acount: Checking
 
+# Another different between GET and POST: GET method is not secure which means anyone can see it's not secure information. It will 
+# send to the server abnd then it will return to us the actual web page using a GET method.
+# If we were to use post what we actually do is send secure iinformation that's encrypted that
+# can't be you seen from either ends and is not stored on the actual web server. The basic way to think 
+# of it is whenever you're using a GET command it's something that's not secure that you don't care if someone sees it, it's typically just typed in through 
+# the address bar where it's just a link you redirecte to it. And then with POST, that's something secure it's usually form data and 
+# it's something that we're not going to be sainvg on the the actual web server itself unless we're gonna be sending that to the data base.
+
 # If we use the form method from GET to POST in the html code then we
 # will no longer receive query strings, instead we'll need to change the flask
 # code (from request.args) to request.form 
@@ -257,6 +266,28 @@ def add_comment():
         </ul>
     
     """
+
+# Another example:
+
+# login.html
+<form action="#" method="post"> # if set action="#", you are going to stay on the same page
+    <p>Name:</p>
+    <p><input type="test" name="nm" /></p>
+    <p><input type="submit" value="submit"/></p>
+</form>
+
+# app.py
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    if request.method == "POST":
+        user = request.form["nm"]
+        return redirect(url_for("user", usr=user))
+    else:
+        return render_template("login.html")
+
+@app.route("/<usr>")
+def user(usr):
+    return f"<h1>{usr}</h1>"
 
 
 # ----------------------------------------Variables in a URL
