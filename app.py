@@ -188,7 +188,7 @@ def search():
 
 
 # ---------------------------------------- Handling POST Requests
-# This route is responding to GET requests
+# This route following is responding to GET requests
 # To accept POST requests, must specify that: methods=["POST"]
 
 
@@ -207,7 +207,40 @@ def add_comment_form():
 # This route following is responding to POST requests
 # and extracting the form data from the above POST requests that is sent
 # request.form is a dict-like object of POST parameters.
+# POST requests, another type of request, can have a payload, also called a 'body', that is longer data that is included inside the request
+# and that could be a string of data or it could be something a bit more formalized like json, it could also be a file or it could be form data:
+# ```
+# method: POST
+# uri: /mysite
+# body: {
+#       "name", "chair",
+#       "price", 17.99
+#       }
+# ```
+# Some HTTP requests can have a payload, and others can't. GET requets for example can't have a payload, but POST and PUT can:
+# ``` 
+# method: GET
+# uri: /mysite
+# ``` 
+# So why is this relevant? We can tell our form to use different types of requests depending on how we want it to send data. 
+# If we tell our form to use get, then it can't put the data in the payload, it puts it in the url:
+# ```
+# GET
+# <form> ------> ?date=2020-08-27&amount=70.00&account=Checking
+# ```
+# And if we use POST, then it'll put the data in the payload.
+# ```
+# POST/form
+# <form method="POST"> ------>     Content-Type: x-www-form-urlencoded
+#                                  Form Data:
+#                                  
+#                                  date: 2020-08-27
+#                                  amount: 70.00
+#                                  acount: Checking
 
+# If we use the form method from GET to POST in the html code then we
+# will no longer receive query strings, instead we'll need to change the flask
+# code (from request.args) to request.form 
 
 @app.route("/add-comment", methods=["POST"])
 def add_comment():
