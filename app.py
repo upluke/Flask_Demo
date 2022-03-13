@@ -289,6 +289,21 @@ def login():
 def user(usr):
     return f"<h1>{usr}</h1>"
 
+# another anohter example:
+
+
+<form action="/test" method="POST" >
+   <label for="word">Enter a word:</label>
+   <input type="text" name="word" />
+   <button>Submit</button>   
+</form>
+
+# app.py
+@app.route('/test', methods=["POST"] )
+def test():
+  if request.method == "POST":
+    word = request.form.get('word')
+    return render_template("test.html", word=word) 
 
 # ----------------------------------------Variables in a URL
 # Argument capture in Flask:
